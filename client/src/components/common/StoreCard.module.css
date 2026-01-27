@@ -1,0 +1,22 @@
+.card {
+  width: 220px;
+  height: 320px;
+
+  padding: 1.5rem;
+  border-radius: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+ /* Profundidad inicial: más “lejos” */
+  transform: scale(0.8) perspective(1000px) translateZ(-50px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(0.85) perspective(1000px) translateZ(0); /* se acerca un poco al hover */
+  box-shadow: 0 30px 60px #00000099;
+}

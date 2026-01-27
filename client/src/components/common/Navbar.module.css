@@ -1,0 +1,121 @@
+.header {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  border-bottom: 1px solid #e5e5e5;
+  z-index: 1000;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: 0 24px;
+  gap: 16px;
+}
+
+/* IZQUIERDA */
+.left {
+  flex: 0 0 auto;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* CENTRO */
+.center {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+.menuIcon {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* Buscador ocupa 40% desktop, 30% tablet/mobile */
+.searchInput {
+  flex: 1 1 auto;
+  max-width: 50%;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Dropdown productos */
+.dropdownMenu {
+  position: absolute;
+  top: 44px;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.dropdownMenu a {
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #333;
+}
+
+.dropdownMenu a:hover {
+  background: #f5f5f5;
+}
+
+/* DERECHA */
+.right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.login {
+  text-decoration: none;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Hamburguesa móvil */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* MEDIA QUERIES */
+
+/* Tablet */
+@media (max-width: 1023px) {
+  .searchInput {
+    max-width: 30%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .menuIcon,
+  .login {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .searchInput {
+    max-width: 30%;
+  }
+}

@@ -1,15 +1,18 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
 
-import {Provider} from "react-redux";
-import {store} from "./redux/store.js"
+import { store } from './app/store';
+import App from './App';
+import './index.css';
+import './styles/warasky.css';
 
-createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
-    <StrictMode>
+const root = createRoot(document.getElementById('root'));
+
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
       <App />
-    </StrictMode>,
-  </Provider>
-)
+    </Provider>
+  </React.StrictMode>
+);

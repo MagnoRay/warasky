@@ -1,13 +1,6 @@
-import { useState } from 'react'
-import './App.css'
+import AppRouter from './routes/AppRouter';
 
-function App() {
-
-  return (
-    <div className='App'>
-      <h1>Warasky, el poder de los andes, en la nube</h1>
-    </div>    
-  )
+export default function App() {
+  return <AppRouter />;
 }
 
-export default App
