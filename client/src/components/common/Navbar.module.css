@@ -20,17 +20,27 @@
 }
 
 .logo {
-  font-weight: bold;
-  font-size: 18px;
+  padding: 0%rem; /* equivale a p-6 (6 * 0.25rem) */
+  display: flex;
+  justify-content: center;
+}
+
+.gradientW {
+  background-image: linear-gradient(to bottom, #faff00, #f0b90b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 800;
 }
 
 /* CENTRO */
 .center {
+  position: relative;
   flex: 1 1 auto;
   display: flex;
   align-items: center;
   gap: 12px;
-  position: relative;
+  justify-content: center;
 }
 
 .menuIcon {
@@ -38,29 +48,42 @@
   border: none;
   font-size: 22px;
   cursor: pointer;
+  margin-right: 4%;
+}
+
+/* Contenedor con gradiente y borde redondeado */
+.gradientWrapper {
+  background: linear-gradient(to right, #38bdf8, #8b5cf6);
+  padding: 3px;               /* grosor del borde */
+  border-radius: 12px;         /* borde redondeado funciona aquí */
+  display: inline-block;
+  width: 60%;
 }
 
 /* Buscador ocupa 40% desktop, 30% tablet/mobile */
 .searchInput {
   flex: 1 1 auto;
-  max-width: 50%;
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  max-width: 100%;
+  padding: 4px 10px;
+  border-radius: 12px;       /* mismo radio que el wrapper */
+  outline: none;
+  border: none;
+  width: 100%;
+  background-color: white;
 }
+/* Dropdown productos */ 
 
-/* Dropdown productos */
 .dropdownMenu {
   position: absolute;
-  top: 44px;
-  left: 0;
+  top: 52px; 
+  left: 50%;
+  transform: translateX(-50%);
   background: white;
   border: 1px solid #ddd;
   min-width: 160px;
   display: flex;
   flex-direction: column;
-  z-index: 10;
-}
+  z-index: 10; }
 
 .dropdownMenu a {
   padding: 8px 12px;
@@ -95,12 +118,96 @@
   cursor: pointer;
 }
 
+.login {
+  position: relative;
+  font-size: 0.875rem;          /* text-sm */
+  font-weight: 500;
+  color: #334155;               /* slate-700 */
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  transition: color 0.2s ease;
+  font-size: 16px;
+}
+
+/* underline animado */
+.login::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 2px;
+  background-color: #3b82f6;    /* blue-500 */
+  transition: width 0.25s ease;
+}
+
+.login:hover {
+  color: #3b82f6;
+}
+
+.login:hover::after {
+  width: 100%;
+}
+
+/* accesibilidad */
+.login:focus-visible {
+  outline: none;
+}
+
+.login:focus-visible::after {
+  width: 100%;
+}
+
+.searchDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;                /* 🔧 CAMBIO 1 → mejor que width: 100% */
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+
+  max-height: 260px;       /* 🔧 CAMBIO 2 → limita altura */
+  overflow-y: auto;        /* 🔧 CAMBIO 2 → scroll si hay muchos */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* 🔧 CAMBIO 3 → look pro */
+}
+
+.info {
+  padding: 12px;
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+}
+
+.searchItem {
+  display: block;          /* ✅ esto es lo clave */
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+  text-decoration: none;   /* quita subrayado */
+}
+
+.searchItem:hover {
+  background: #f5f5f5;
+}
+
+.highlight {
+  font-weight: 700;
+  color: inherit; /* mantiene el color del texto original */
+}
+
+
+
+
 /* MEDIA QUERIES */
 
 /* Tablet */
 @media (max-width: 1023px) {
   .searchInput {
-    max-width: 30%;
+    max-width: 100%;
   }
 }
 
@@ -114,8 +221,11 @@
   .hamburger {
     display: block;
   }
+  .gradientWrapper{
+    width: 100%;
+  }
 
   .searchInput {
-    max-width: 30%;
+    max-width: 100%;
   }
 }

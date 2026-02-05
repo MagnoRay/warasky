@@ -7,16 +7,7 @@ export default defineConfig({
   plugins: [
     react(),
   tailwindcss(),
-],  
-  server: {
-    proxy: {
-      '/product': {
-        target: 'http://localhost:3001',
-        changeOrigin: true,
-      },
-    },
-  },
-  
+],
   
 })
 

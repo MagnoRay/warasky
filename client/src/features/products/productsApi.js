@@ -10,7 +10,11 @@ export const productsApi = api.injectEndpoints({
       query: (id) => `/product/${id}`,
       providesTags: ['Products'],
     }),
+    getProductByName: builder.query({
+      query: (name) =>`/search?name=${encodeURIComponent(name)}`,
+      providesTags: ['Products'],
+    }),
   }),
 });
 
-export const { useGetProductsQuery, useGetProductByIdQuery } = productsApi;
+export const { useGetProductsQuery, useGetProductByIdQuery, useGetProductByNameQuery} = productsApi;
