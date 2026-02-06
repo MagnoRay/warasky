@@ -3,6 +3,8 @@ import Logo from "./Logo";
 import styles from "./Navbar.module.css";
 import { useGetProductByNameQuery } from "../../features/products/productsApi";
 import { useNavigate } from "react-router-dom";
+import { MoonIcon, ShoppingCartIcon, MapPinIcon, SunIcon } from '@heroicons/react/24/outline';
+
 
 const Navbar = ()=>{
   const [search, setSearch] = useState("");
@@ -63,14 +65,30 @@ const Navbar = ()=>{
           >
             ☰
           </button>
+          
           <div className={styles.gradientWrapper}>
-              <input
-                type="text"
-                placeholder="Buscar..."
-                value={search}
-                className={styles.searchInput}
-                onChange={(e) => setSearch(e.target.value)}
-              />
+            <divi className={styles.searchWrapper}>
+              <svg
+                className={styles.searchIcon}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+                <input
+                  type="text"
+                  placeholder="Buscar productos, marcas, tiendas y más..."
+                  value={search}
+                  className={styles.searchInput}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </divi>
                 {/* Dropdown de resultados */}
             {debouncedSearch.trim() && products?.length > 0 && (
               <div className={styles.searchDropdown}>
@@ -92,8 +110,8 @@ const Navbar = ()=>{
           </div>
 
           {/* Dropdown productos */}
-          {dropdownOpen && (
-            <div className={styles.dropdownMenu}>
+          {dropdownOpen && (            
+            <div className={styles.dropdownMenu}> 
               <a href="#">Producto 1</a>
               <a href="#">Producto 2</a>
               <a href="#">Producto 3</a>
@@ -103,6 +121,16 @@ const Navbar = ()=>{
 
         {/* DERECHA */}
         <div className={styles.right}>
+          <button>
+            <MoonIcon className="h-5 w-5 text-gray-600" />
+            </button>         
+          <button>
+            <SunIcon className="h-5 w-5 text-gray-600" />
+          </button>
+            <MapPinIcon className="h-5 w-5 text-gray-600" /> Lima, PE         
+          <button>
+            <ShoppingCartIcon className="h-5 w-5 text-gray-600" />
+          </button>
           <a href="#" className={styles.login}>Iniciar sesión</a>
 
           {/* Hamburguesa móvil */}
