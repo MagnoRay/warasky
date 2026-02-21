@@ -1,18 +1,45 @@
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
-  background: #fff;
-  border-bottom: 1px solid #e5e5e5;
-  z-index: 1000;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+
+  transition: 
+    background 0.3s ease,
+    backdrop-filter 0.3s ease,
+    box-shadow 0.3s ease;
 }
+
+/* 🟢 inicio */
+.top {
+  background: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+}
+
+/* 🟡 al scrollear */
+.scrolled {
+  background: rgba(255, 255, 255, 0.474); /* beige translúcido */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+
 
 .container {
   display: flex;
   align-items: center;
-  height: 64px;
-  padding: 0 24px;
+  justify-content: space-between;
+  height: 75px;
   gap: 16px;
+  padding: 0 16px;
 }
+
+
 
 /* IZQUIERDA */
 .left {
@@ -30,20 +57,20 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  font-weight: 800;
+  font-weight: 800px;
 }
 
 
 
 /* CENTRO */
 .center {
-  position: relative;
-  flex: 1 1 auto;
+  flex: 1;
   display: flex;
-  align-items: center;
-  gap: 12px;
   justify-content: center;
+  gap: 10px;
 }
+
+
 
 .menuIcon {
   background: none;
@@ -52,7 +79,11 @@
   cursor: pointer;
   margin-right: 4%;
 }
-
+.navWrapper {
+  max-width: 1300px; /* similar a ComprasPeru */
+  margin: 0 auto;
+  padding: 0 16px;
+}
 /* Contenedor con gradiente y borde redondeado */
 .gradientWrapper {
   background: linear-gradient(
@@ -63,7 +94,8 @@
   padding: 3px;
   border-radius: 12px;
   display: inline-block;
-  width: 60%;
+  width: 70%;
+  max-width: 560px;
   transition: background 0.25s ease;
 }
 
@@ -87,19 +119,75 @@
   width: 100%;
   background-color: white;
 }
+
+.clearButton {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;           /* p-2 equivalente */
+  border-radius: 0.5rem;  /* rounded */
+  transition: background-color 0.2s ease;
+  color: #666666;
+}
+
+.clearButton:hover {
+  background-color: #f3f3f3; /* hover:bg-gray-100 */
+  color: #333333;
+}
+
+.loginButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* espacio entre ícono y texto */
+  background: linear-gradient(to right, #60a5fa, #8b5cf6); /* sky → violet */
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease; /* solo animación del color */
+  user-select: none;
+}
+
+.loginButton:hover {
+  background: linear-gradient(to right, #3b82f6, #7c3aed); /* gradiente más oscuro al hover */
+}
+
+
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.dropdownWrapper {
+  position: relative;   /* 🔥 CLAVE */
+  display: inline-block;
+}
+
 /* Dropdown productos */ 
 
 .dropdownMenu {
   position: absolute;
-  top: 52px; 
-  left: 50%;
-  transform: translateX(-50%);
-  background: white;
-  border: 1px solid #ddd;
-  min-width: 160px;
-  display: flex;
-  flex-direction: column;
-  z-index: 10; }
+  top: 100%;             /* justo debajo del botón */
+  left: 0;
+  transform: translateY(8px); /* 🔥 separación visual */
+  width: 230px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.12);
+  padding: 8px 0;
+  z-index: 100;
+ }
 
 .dropdownMenu a {
   padding: 8px 12px;
@@ -177,18 +265,19 @@
 .searchDropdown {
   position: absolute;
   top: 100%;
-  left: 0;
-  right: 0;                /* 🔧 CAMBIO 1 → mejor que width: 100% */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;              /* 🔧 CAMBIO 1 → mejor que width: 100% */
   background: white;
   border: 1px solid #ddd;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
   z-index: 1000;
-
   max-height: 260px;       /* 🔧 CAMBIO 2 → limita altura */
   overflow-y: auto;        /* 🔧 CAMBIO 2 → scroll si hay muchos */
   box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* 🔧 CAMBIO 3 → look pro */
+  margin-top: 0px;
 }
 
 .info {
@@ -231,7 +320,46 @@
   pointer-events: none;
 }
 
+/*Carrito de compra*/
+.cartButton {
+  background-color: transparent;
+}
 
+.cartButton:hover {
+  background-color: oklch(0.746 0.16 232.661);
+}
+
+
+.dropdownMenu {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  width: 230px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
+  padding: 8px 0;
+  z-index: 100;
+}
+
+.dropdownMenu a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  color: #1f2937;
+  text-decoration: none;
+  font-size: 15px;
+  transition: background 0.2s ease;
+}
+
+.dropdownMenu a:hover {
+  background: #f3f4f6;
+}
+
+.dropdownMenu svg {
+  color: #ff6a00; /* naranja tipo la imagen */
+}
 
 
 /* MEDIA QUERIES */

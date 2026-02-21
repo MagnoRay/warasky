@@ -1,0 +1,30 @@
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, #60a5fa, #8b5cf6);
+  color: white;
+  border-radius: 9999px;
+  padding: 16px;
+}
+
+.primaryButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(to right, #60a5fa, #8b5cf6);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  user-select: none;
+}
+
+.primaryButton:hover {
+  background: linear-gradient(to right, #3b82f6, #7c3aed);
+}

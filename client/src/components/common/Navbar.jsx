@@ -1,12 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Logo from "./Logo";
 import styles from "./Navbar.module.css";
 import { useGetProductByNameQuery } from "../../features/products/productsApi";
 import { useNavigate } from "react-router-dom";
-import { MoonIcon, ShoppingCartIcon, MapPinIcon, SunIcon } from '@heroicons/react/24/outline';
+import { Sun, Moon, MapPin, X, User,LayoutGrid, ChevronDown } from "lucide-react";
+import CartButton from "./CartButton";
+import { useTheme } from "./ThemeContext";
+import WaraskyIcon from "./WaraskyIcon";
 
 
-const Navbar = ()=>{
+const Navbar = ({className, cartOpen, setCartOpen})=>{
+  const { darkMode, toggleDarkMode } = useTheme();
+
+   const [scrolled, setScrolled] = useState(false);
+  
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   
@@ -14,6 +21,8 @@ const Navbar = ()=>{
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navigate = useNavigate();
+  const clearSearch = () => setSearch("");
+  const timeoutRef = useRef(null);
  
 
  // 🔹 Debounce para la búsqueda en tiempo real
@@ -46,9 +55,31 @@ const Navbar = ()=>{
   );
 };
  
+    useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+const handleEnter = () => {
+  clearTimeout(timeoutRef.current);
+  setDropdownOpen(true);
+};
+
+const handleLeave = () => {
+  timeoutRef.current = setTimeout(() => {
+    setDropdownOpen(false);
+  }, 150);
+};
 
   return (
-    <header className={styles.header}>
+    <nav className={`${styles.header} ${
+        scrolled ? styles.scrolled : styles.top
+      }`}>
+    <div className={styles.navWrapper}>
       <div className={styles.container}>
 
         {/* IZQUIERDA */}
@@ -57,38 +88,49 @@ const Navbar = ()=>{
         </div>
 
         {/* CENTRO: ☰ + BUSCADOR */}
-        <div className={styles.center}>
-          <button
-            className={styles.menuIcon}
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-            aria-label="Mostrar productos"
-          >
-            ☰
+        <div className={styles.center}>  
+          <div className={styles.dropdownWrapper} 
+          onMouseEnter={handleEnter}
+          onMouseLeave={handleLeave}
+          >        
+           <button
+            className="flex items-center justify-center gap-1 p-2 rounded hover:bg-indigo-100 transition">          
+              <LayoutGrid />
+            Categorías
+            <ChevronDown size={16} />
           </button>
-          
+          {/* Dropdown productos */}
+          {dropdownOpen && (            
+            <div className={styles.dropdownMenu}> 
+              <a href="#">Producto 1</a>
+              <a href="#">Producto 2</a>
+              <a href="#">Producto 3</a>
+            </div>
+          )}
+          </div>
+
           <div className={styles.gradientWrapper}>
-            <divi className={styles.searchWrapper}>
-              <svg
-                className={styles.searchIcon}
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
+            <div className={styles.searchWrapper}>
+              <WaraskyIcon />
                 <input
                   type="text"
                   placeholder="Buscar productos, marcas, tiendas y más..."
                   value={search}
                   className={styles.searchInput}
                   onChange={(e) => setSearch(e.target.value)}
+                  style={{ paddingRight: "2rem" }}
                 />
-              </divi>
+                {search && (
+                <button
+                  onClick={() => setSearch("")}
+                  className={styles.clearButton}
+                  aria-label="Limpiar búsqueda"
+                  type="button"
+                >
+                  <X size={18} />
+                </button>
+              )}
+              </div>
                 {/* Dropdown de resultados */}
             {debouncedSearch.trim() && products?.length > 0 && (
               <div className={styles.searchDropdown}>
@@ -108,30 +150,37 @@ const Navbar = ()=>{
             )}
 
           </div>
-
-          {/* Dropdown productos */}
-          {dropdownOpen && (            
-            <div className={styles.dropdownMenu}> 
-              <a href="#">Producto 1</a>
-              <a href="#">Producto 2</a>
-              <a href="#">Producto 3</a>
-            </div>
-          )}
+           
         </div>
 
         {/* DERECHA */}
         <div className={styles.right}>
-          <button>
-            <MoonIcon className="h-5 w-5 text-gray-600" />
-            </button>         
-          <button>
-            <SunIcon className="h-5 w-5 text-gray-600" />
+            
+          <div className="flex items-center gap-4">
+            
+             {/* Botón Sun */}
+              <button
+                onClick={toggleDarkMode}
+                className="relative flex items-center justify-center p-2 rounded hover:bg-indigo-100 transition"
+                aria-label="Cambiar tema"
+              >
+                {darkMode ? (
+                  <Sun className="w-5 h-5 text-yellow-400" />
+                ) : (
+                  <Moon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                )}
+              </button>
+              <div className="flex items-center gap-1 text-gray-600">
+                <MapPin className="w-4 h-4" />
+                <span>Huaraz, PE</span>
+              </div>
+            <CartButton cartOpen={cartOpen} setCartOpen={setCartOpen} />
+          </div>
+
+          <button className={styles.loginButton} type="button">
+            <User className={styles.icon} />
+            Iniciar sesión
           </button>
-            <MapPinIcon className="h-5 w-5 text-gray-600" /> Lima, PE         
-          <button>
-            <ShoppingCartIcon className="h-5 w-5 text-gray-600" />
-          </button>
-          <a href="#" className={styles.login}>Iniciar sesión</a>
 
           {/* Hamburguesa móvil */}
           <button
@@ -153,7 +202,8 @@ const Navbar = ()=>{
           <a href="#">Iniciar sesión</a>
         </div>
       )}
-    </header>
+      </div>
+    </nav>
   );
 }
 

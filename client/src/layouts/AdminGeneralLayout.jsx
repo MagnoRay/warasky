@@ -1,17 +1,28 @@
 import { Outlet } from 'react-router-dom';
+import React, { useState } from "react";
 import Navbar from '../components/common/Navbar';
 import Sidebar from '../components/common/Sidebar';
+import styles from './AdminGeneralLayout.module.css';
+import CartButton from '../components/common/CartButton';
+import HeroSlider from '../components/marketing/HeroSlider'
 
-export default function AdminGeneralLayout() {
+export default function AdminGeneralLayout({children}) {
+  const [cartOpen, setCartOpen] = useState(false);
   return (
-    <>
-      <Navbar />
-      <div className="layout">
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white transition-colors duration-300">     
+      <Navbar cartOpen={cartOpen} setCartOpen={setCartOpen} />
+      {children}
+      <CartButton cartOpen={cartOpen} setCartOpen={setCartOpen} />
+      <HeroSlider />
+
+      <div className={styles.layout}>
+        
         <Sidebar />
-        <main className="w-full max-w-7xl mx-auto px-4">
+        <main className={styles.main}>
           <Outlet />
         </main>
+
       </div>
-    </>
+    </div>
   );
 }
